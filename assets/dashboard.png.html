@@ -1,0 +1,212 @@
+
+<style>
+.dash-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+.metric-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 16px;flex:1}
+.metric-label{font-size:12px;color:var(--color-text-tertiary);margin:0 0 4px}
+.metric-val{font-size:26px;font-weight:500;color:var(--color-text-primary);margin:0;line-height:1}
+.metric-sub{font-size:11px;margin:4px 0 0}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px}
+.sev-bar-track{background:var(--color-border-tertiary);border-radius:4px;height:8px;flex:1}
+.threat-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.threat-row:last-child{border-bottom:none}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#E24B4A;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+</style>
+
+<div style="padding:0 0 1rem">
+
+  <!-- Header bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="pulse"></span>
+      <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">AISecOps · SOC dashboard</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:12px;color:var(--color-text-tertiary)" id="clock"></span>
+      <span class="badge" style="background:#FCEBEB;color:#A32D2D">Live</span>
+    </div>
+  </div>
+
+  <!-- Row 1: Alert Summary metric cards -->
+  <div class="dash-card" style="margin-bottom:12px">
+    <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:0 0 12px">Alert summary</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div class="metric-card">
+        <p class="metric-label">Total alerts</p>
+        <p class="metric-val" id="total-val">247</p>
+        <p class="metric-sub" style="color:#A32D2D">+18 last hour</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Open cases</p>
+        <p class="metric-val" id="open-val">34</p>
+        <p class="metric-sub" style="color:var(--color-text-tertiary)">Awaiting triage</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Avg. response</p>
+        <p class="metric-val">4.2<span style="font-size:14px;font-weight:400">m</span></p>
+        <p class="metric-sub" style="color:#27500A">-0.8m vs yesterday</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">FP rate</p>
+        <p class="metric-val">12<span style="font-size:14px;font-weight:400">%</span></p>
+        <p class="metric-sub" style="color:var(--color-text-tertiary)">Tuning active</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Severity + Top Threats -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+
+    <!-- Severity card -->
+    <div class="dash-card">
+      <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:0 0 14px">Severity breakdown</p>
+
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span style="display:flex;align-items:center;gap:5px">
+            <span style="width:8px;height:8px;border-radius:2px;background:#E24B4A;display:inline-block"></span>
+            <span style="color:var(--color-text-secondary)">High</span>
+          </span>
+          <span style="font-weight:500;color:var(--color-text-primary)">89 <span style="color:var(--color-text-tertiary);font-weight:400">— 36%</span></span>
+        </div>
+        <div class="sev-bar-track"><div style="width:36%;height:8px;border-radius:4px;background:#E24B4A"></div></div>
+      </div>
+
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span style="display:flex;align-items:center;gap:5px">
+            <span style="width:8px;height:8px;border-radius:2px;background:#BA7517;display:inline-block"></span>
+            <span style="color:var(--color-text-secondary)">Medium</span>
+          </span>
+          <span style="font-weight:500;color:var(--color-text-primary)">112 <span style="color:var(--color-text-tertiary);font-weight:400">— 45%</span></span>
+        </div>
+        <div class="sev-bar-track"><div style="width:45%;height:8px;border-radius:4px;background:#BA7517"></div></div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span style="display:flex;align-items:center;gap:5px">
+            <span style="width:8px;height:8px;border-radius:2px;background:#639922;display:inline-block"></span>
+            <span style="color:var(--color-text-secondary)">Low</span>
+          </span>
+          <span style="font-weight:500;color:var(--color-text-primary)">46 <span style="color:var(--color-text-tertiary);font-weight:400">— 19%</span></span>
+        </div>
+        <div class="sev-bar-track"><div style="width:19%;height:8px;border-radius:4px;background:#639922"></div></div>
+      </div>
+
+      <!-- Donut -->
+      <div style="position:relative;width:100%;height:140px">
+        <canvas id="donut"></canvas>
+      </div>
+    </div>
+
+    <!-- Top Threats card -->
+    <div class="dash-card">
+      <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:0 0 4px">Top threats</p>
+      <div class="threat-row">
+        <span class="badge" style="background:#FCEBEB;color:#A32D2D;min-width:44px;text-align:center">HIGH</span>
+        <span style="flex:1;color:var(--color-text-primary)">Brute force · T1110</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">63</span>
+      </div>
+      <div class="threat-row">
+        <span class="badge" style="background:#FCEBEB;color:#A32D2D;min-width:44px;text-align:center">HIGH</span>
+        <span style="flex:1;color:var(--color-text-primary)">Data exfil · T1041</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">26</span>
+      </div>
+      <div class="threat-row">
+        <span class="badge" style="background:#FAEEDA;color:#633806;min-width:44px;text-align:center">MED</span>
+        <span style="flex:1;color:var(--color-text-primary)">Lateral move · T1021</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">41</span>
+      </div>
+      <div class="threat-row">
+        <span class="badge" style="background:#FAEEDA;color:#633806;min-width:44px;text-align:center">MED</span>
+        <span style="flex:1;color:var(--color-text-primary)">Priv escalation · T1068</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">29</span>
+      </div>
+      <div class="threat-row">
+        <span class="badge" style="background:#FAEEDA;color:#633806;min-width:44px;text-align:center">MED</span>
+        <span style="flex:1;color:var(--color-text-primary)">C2 beaconing · T1071</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">19</span>
+      </div>
+      <div class="threat-row">
+        <span class="badge" style="background:#EAF3DE;color:#27500A;min-width:44px;text-align:center">LOW</span>
+        <span style="flex:1;color:var(--color-text-primary)">Recon scan · T1595</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">46</span>
+      </div>
+      <div style="margin-top:12px">
+        <button onclick="sendPrompt('Give me a full breakdown of the top 10 MITRE techniques detected today with remediation steps')" style="width:100%;font-size:12px;padding:7px">View full threat report ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Timeline -->
+  <div class="dash-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:0">Alert timeline · last 24 h</p>
+      <div style="display:flex;gap:12px;font-size:11px;color:var(--color-text-tertiary)">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A;display:inline-block"></span>High</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#BA7517;display:inline-block"></span>Medium</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#639922;display:inline-block"></span>Low</span>
+      </div>
+    </div>
+    <div style="position:relative;width:100%;height:200px">
+      <canvas id="timeline"></canvas>
+    </div>
+    <div style="margin-top:12px">
+      <button onclick="sendPrompt('Explain the alert spike at 14:00 — what triggered it and what was the automated response?')" style="font-size:12px;padding:6px 14px">Investigate spike ↗</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const hours = ['00','02','04','06','08','10','12','14','16','18','20','22'];
+
+new Chart(document.getElementById('timeline'), {
+  type: 'bar',
+  data: {
+    labels: hours,
+    datasets: [
+      { label:'High',   data:[3,1,2,4,5,8,6,18,12,9,11,10], backgroundColor:'#E24B4A', stack:'s' },
+      { label:'Medium', data:[5,3,4,6,8,10,9,14,11,12,13,17], backgroundColor:'#BA7517', stack:'s' },
+      { label:'Low',    data:[2,2,3,3,4,5,4,6,5,4,4,4],  backgroundColor:'#639922', stack:'s' }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ title: i => i[0].label + ':00' } } },
+    scales:{
+      x:{ stacked:true, grid:{ display:false }, ticks:{ color:'#888780', font:{ size:11 } } },
+      y:{ stacked:true, grid:{ color:'rgba(136,135,128,0.15)' }, ticks:{ color:'#888780', font:{ size:11 }, stepSize:10 } }
+    }
+  }
+});
+
+new Chart(document.getElementById('donut'), {
+  type: 'doughnut',
+  data:{
+    labels:['High','Medium','Low'],
+    datasets:[{ data:[89,112,46], backgroundColor:['#E24B4A','#BA7517','#639922'], borderWidth:0, hoverOffset:4 }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false, cutout:'72%',
+    plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: i => ' ' + i.label + ': ' + i.raw + ' alerts' } } }
+  }
+});
+
+function tick(){
+  const n=new Date();
+  const pad=v=>String(v).padStart(2,'0');
+  document.getElementById('clock').textContent=pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds())+' UTC';
+}
+tick(); setInterval(tick,1000);
+
+let t=247, o=34;
+setInterval(()=>{
+  const bump=Math.random()<0.3?1:0;
+  t+=bump; o=Math.max(0,o+bump-(Math.random()<0.15?1:0));
+  document.getElementById('total-val').textContent=t;
+  document.getElementById('open-val').textContent=o;
+},4000);
+</script>

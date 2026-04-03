@@ -1,0 +1,4 @@
+login_bruteforce: T1110
+lateral_movement: T1021
+data_exfiltration: T1041
+suspicious_ip: T1071
